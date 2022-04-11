@@ -2,22 +2,22 @@
 //
 //  Author:        Jeremy Aubrey
 //
-//  Program #:     4
+//  Program #:     5
 //
-//  File Name:     ThreadExecutor.java
+//  File Name:     TestPIExecutor.java
 //
 //  Course:        COSC-4302 Operating Systems
 //
-//  Due Date:      03/13/2022
+//  Due Date:      03/29/2022 (Original, moved)
 //
 //  Instructor:    Fred Kumi 
 //
-//  Chapter:       4
+//  Chapter:       5
 //
-//  Description:   A multi-threaded sorting application that generates a 
-//                 random array of integers based on user input (a count)
-//                 and distributes the sorting and merging work to separate
-//                 threads.
+//  Description:   A driver class to estimate PI using the monte carlo
+//                 technique. This driver class displays instructions to 
+//                 the user and passes user input to the PIEstimator class 
+//                 for processing.
 //
 //*********************************************************************
 
@@ -26,7 +26,6 @@ import java.util.Scanner;
 public class TestPIExecutor {
 	
 	private Scanner userIn = new Scanner(System.in);
-	private static int points = 0;
 	
     //***************************************************************
     //
@@ -42,31 +41,43 @@ public class TestPIExecutor {
 	public static void main(String[] args) {
 		
 		TestPIExecutor obj = new TestPIExecutor();
+		PIEstimator estimator = new PIEstimator();
 		obj.developerInfo();
 		obj.printInstructions();
 		
 		int points = obj.getPoints();
-		
-		while(points != 0) {
-			PIEstimator estimator = new PIEstimator();
-			double result = estimator.calculatePI(points);
-			System.out.println("Result: " + result);
+		while(points != 0) { // user quits with 0
+			
+			double result = estimator.estimatePI(points); 
+			System.out.println("Estimation: " + result);
 			points = obj.getPoints();
 		}
 		
 		System.out.println("Goodbye");
+		
 	}// end main method
 	
-	
+    //***************************************************************
+    //
+    //  Method:       getPoints (Non Static)
+    // 
+    //  Description:  Attempts to get a positive integer from the user
+    //                representing the number of random points to be 
+    //                used for calculating PI.
+    //
+    //  Parameters:   None
+    //
+    //  Returns:      int
+    //
+    //***************************************************************
 	public int getPoints() {
 		
 		boolean isValid = false;
 		int points = 0;
 		
 		while(!isValid) {
-			System.out.print("Please enter the number of points: ");
+			System.out.print("\nPlease enter the number of points: ");
 			String input = userIn.nextLine();
-			
 			try {
 				int temp = Integer.parseInt(input);
 				if(temp >= 0) {
@@ -81,7 +92,8 @@ public class TestPIExecutor {
 		}
 		
 		return points;
-	}
+		
+	}// end getPoints method
 	
 
     //***************************************************************
@@ -108,24 +120,6 @@ public class TestPIExecutor {
 	
     //***************************************************************
     //
-    //  Method:       getInput (Non Static)
-    // 
-    //  Description:  Gets input from the user.
-    // 
-    //  Parameters:   None
-    //
-    //  Returns:      String 
-    //
-    //**************************************************************
-	public String getInput () {
-		
-		String input = userIn.nextLine();
-		return input;
-		
-	}// end getInput method
-	
-    //***************************************************************
-    //
     //  Method:       developerInfo (Non Static)
     // 
     //  Description:  The developer information method of the program.
@@ -143,4 +137,4 @@ public class TestPIExecutor {
 
     }// end developerInfo method
     
-}// end ThreadExecutor class
+}// end TestPIExecutor class
